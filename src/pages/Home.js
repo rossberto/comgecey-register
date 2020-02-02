@@ -1,40 +1,117 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import {Container, Grid, Button, Paper, AppBar, Toolbar} from '@material-ui/core';
-import logo from '../comgecey-05.jpg';
+import { makeStyles } from '@material-ui/core/styles';
+import {Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
+
+import logo from './comgecey-02.png';
+import medicos from './medicos.png'
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  header: {
+    background: '#111f22ff',
+    color: 'white'
+  },
+  calltoaction: {
+    background: '#7a6800ff',
+    color: 'white'
+  },
+  button: {
+    color: 'white',
+    margin: '10px'
+  },
+  image: {
+    maxWidth:"400px"
+  },
+  emotive: {
+    marginTop: "150px",
+    backgroundColor: 'rgb(122,104,0)',//'#7a6800ff',
+    color: 'white'//'rgb(17,31,34)'
+  }
+}));
 
 export default function Home() {
+  const classes = useStyles();
+
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <div>
-      <Container component="main" style={{width: '100%'}}>
-        <Grid container style={{position:'contain', width:'100%', backgroundRepeat: 'no-repeat', backgroundSize: 'contain', backgroundImage: 'url(http://www.comgecey.org/wp-content/uploads/2016/03/Slider1.png)'}}>
-          <Grid item container style={{width:'100%', height: '600px' }}>
-            <Grid item>
-              <Button><Link exact to="/registro">Aplicar</Link></Button>
-              <Button><Link to="/registro/:idRegister">Confirmar</Link></Button>
+    <div className={classes.root}>
+      <Grid container spacing={3} justify="center">
+        <Grid item xs={12}>
+          <Paper alignItems="center" className={classes.paper, classes.header}>
+            <Container>
+            <Grid item container spacing={3} alignItems="center">
+              <Grid item xs={12} sm={6}>
+                <img position="contain" width="100%" className={classes.image} src={logo} />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <Typography variant="h2" component="h2"><center>Convocatoria Abierta</center></Typography>
+                <Typography variant="h3"><center>Próximo Examen de Certificación</center></Typography>
+                <Typography variant="h3"><center>1 de Marzo del 2020</center></Typography>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Typography align="center" variant="h2" component="h2" gutterBottom style={{alignItems:'center'}}>
-                CERTIFICANDO PARA DAR CONFIANZA
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item style={{width:'100%', backgroundColor: 'green', height: '400px' }}>
-            <h1>Hola</h1>
-          </Grid>
-          <Grid item style={{width:'100%', backgroundColor: 'blue', height: '400px' }}>
-            <h1>Hola</h1>
-          </Grid>
-          <Grid item style={{width:'100%', backgroundColor: 'black', height: '400px' }}>
-            <h1>Hola</h1>
-          </Grid>
+            </Container>
+          </Paper>
         </Grid>
-      </Container>
-      </div>
-    </React.Fragment>
+        <Grid item xs={12}>
+          <Paper alignItems="center" className={classes.paper, classes.calltoaction}>
+            <center><Typography variant="h4">La inscripción es online</Typography>
+            <Button variant="outlined" className={classes.button}>Ir a la Página de Registro</Button></center>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper alignItems="center" className={classes.paper}>
+            <Container>
+              <Typography variant="h4"><center>Cómo Inscribirse</center></Typography>
+              <Grid item container spacing={3} alignItems="center">
+                <Grid item xs={12} sm={4}>
+                  <Card>
+                    <CardContent style={{textAlign:"left"}}>
+                      <Typography variant="h5">
+                        1. Regístrarte en nuestra plataforma.
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button>Ir a la Página de Registro</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <Card>
+                    <CardContent style={{textAlign:"left"}}>
+                      <Typography variant="h5">
+                        2. Realiza el pago de inscripción.
+                      </Typography>
+                      <br />
+                      <Typography variant="h7">$2,500 en la cuenta BBVA 0114591933.</Typography>
+                      <br />
+                      <br />
+                      <Typography variant="h7">El comprobante de pago se te solicitará en el último paso.</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <Card>
+                    <CardContent style={{textAlign:"left"}}>
+                      <Typography variant="h5">3. Ingresa tu documentación.</Typography>
+                      <br />
+                      <Typography variant="h7">Se hace dentro de la plataforma.</Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button>Ver documentacion</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Container>
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
