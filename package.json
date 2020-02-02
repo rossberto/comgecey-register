@@ -1,5 +1,6 @@
 {
-  "name": "comgecey-main",
+  "name": "comgecey-register",
+  "homepage": "https://registro.comgecey.org/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
