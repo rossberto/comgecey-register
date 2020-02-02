@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -91,7 +91,38 @@ const useStyles = makeStyles(theme => ({
 
 export default function Apply() {
   const classes = useStyles();
-  const [showSuscribe, setShowSuscribe] = useState(false);
+  const [canBeSubmitted, setCanBeSubmitted] = useState(true);
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: '',
+    confirm: ''
+  });
+
+  useEffect(() => {
+    if ((inputs.email.includes('@')) &&
+        (inputs.password.length>3) &&
+        (inputs.password.length===inputs.confirm.length) &&
+        (inputs.email.length>=5)) {
+      setCanBeSubmitted(false)
+    } else {
+      setCanBeSubmitted(true)
+    }
+  }, [inputs]);
+
+  function handleChange(e) {
+    const key = e.target.name;
+    const value = e.target.value;
+    setInputs({...inputs, [key]:value})
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (inputs.confirm===inputs.password) {
+      alert('Te hemos enviado un correo de confirmación.');
+    } else {
+      alert('Contraseña no coincide con la confirmación.');
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -106,14 +137,14 @@ export default function Apply() {
           <Typography component="h1" variant="h5">
             Inicia hoy mismo tu registro.
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onChange={handleChange} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Dirección de Correo Electrónico"
+              label="Correo Electrónico"
               name="email"
               autoComplete="email"
               autoFocus
@@ -123,9 +154,9 @@ export default function Apply() {
               margin="normal"
               required
               fullWidth
-              id="name"
+              id="password"
               label="Contraseña"
-              name="email"
+              name="password"
               autoComplete="email"
               autoFocus
               type="password"
@@ -135,9 +166,9 @@ export default function Apply() {
               margin="normal"
               required
               fullWidth
-              name="lastname"
+              name="confirm"
               label="Confirmar Contraseña"
-              id="password"
+              id="confirm"
               autoComplete="current-password"
               type="password"
             />
@@ -147,6 +178,7 @@ export default function Apply() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={canBeSubmitted}
             >
               Registrarme
             </Button>
