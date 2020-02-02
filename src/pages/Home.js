@@ -4,13 +4,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import {Container, Grid, Button, Paper, AppBar, Toolbar} from '@material-ui/core';
 import logo from '../comgecey-05.jpg';
+
 export default function Home() {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container component="body" maxWidth="lg" background={logo}>
-        <Grid container>
-          <Grid item container style={{width:'100%', backgroundColor: 'red', height: '600px' }}>
+      <div>
+      <Container component="main" style={{width: '100%'}}>
+        <Grid container style={{position:'contain', width:'100%', backgroundRepeat: 'no-repeat', backgroundSize: 'contain', backgroundImage: 'url(http://www.comgecey.org/wp-content/uploads/2016/03/Slider1.png)'}}>
+          <Grid item container style={{width:'100%', height: '600px' }}>
             <Grid item>
               <Button><Link exact to="/registro">Aplicar</Link></Button>
               <Button><Link to="/registro/:idRegister">Confirmar</Link></Button>
@@ -32,6 +34,7 @@ export default function Home() {
           </Grid>
         </Grid>
       </Container>
+      </div>
     </React.Fragment>
   );
 }

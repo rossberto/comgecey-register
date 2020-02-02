@@ -151,7 +151,7 @@ export default function Apply() {
               Registrarme
             </Button>
 
-            <Link href="#" variant="body2">
+            <Link href="http://app.comgecey.org/signin" variant="body2">
               ¿Ya tienes una cuenta? Ingresa aquí.
             </Link>
 

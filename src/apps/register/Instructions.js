@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DocumentsDialog from './DocumentsDialog';
 
 const useStyles = makeStyles({
   card: {
@@ -28,9 +29,18 @@ const useStyles = makeStyles({
   },
 });
 
-export default function SimpleCard() {
+export default function Instructions() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const [open, setOpen] = useState(false);
+
+  function handleClick() {
+    setOpen(true);
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
 
   return (
     <Card className={classes.card}>
@@ -56,8 +66,9 @@ export default function SimpleCard() {
       </CardContent>
       <br />
       <CardActions>
-        <Button size="small">Ver documentos necesarios</Button>
+        <Button onClick={handleClick} size="small">Ver documentos necesarios</Button>
       </CardActions>
+      <DocumentsDialog closeDialog={handleClose} open={open} />
     </Card>
   );
 }
