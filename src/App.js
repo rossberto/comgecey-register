@@ -1,25 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from './comgecey-05.jpg';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import Home from './pages/Home';
+import InscriptionForm from './pages/register/InscriptionForm';
+import Apply from './apps/register/Apply';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path='/registro/:idRegister' component={InscriptionForm} />
+        <Route path='/registro' component={Apply} />
+        <Route path='/' component={Home} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 
