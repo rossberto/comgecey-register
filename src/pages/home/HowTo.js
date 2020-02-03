@@ -48,7 +48,7 @@ export default function HowTo() {
             <Card>
               <CardContent style={{textAlign:"left"}}>
                 <Typography variant="h5">
-                  1. Regístrarte en nuestra plataforma.
+                  1. Regístrate en nuestra plataforma.
                 </Typography>
               </CardContent>
               <CardActions>

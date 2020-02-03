@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {IconButton, Divider, TextField, Link, Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
+import {TextField, Paper, Typography, Button} from '@material-ui/core';
 import { amber } from '@material-ui/core/colors';
+import axios from 'axios';
+import SuscribeDialog from './SuscribeDialog';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -25,6 +27,38 @@ const theme = createMuiTheme({
 export default function Suscribe() {
   const classes = useStyles();
 
+  const [email, setEmail] = useState('');
+  const [canBeSubmitted, setCanBeSubmitted] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  function handleChange(e) {
+    const email = e.target.value;
+    setEmail(email);
+
+    if (email.includes('@')) {
+      setCanBeSubmitted(true);
+    } else {
+      setCanBeSubmitted(false);
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    axios.post('http://localhost:4000/api/newsletter/suscribers', {email: email}).then((response) => {
+      if (response.status === 201) {
+        setEmail('');
+        setOpen(true);
+      }
+    }).catch(() => {
+      setEmail('');
+      alert('Ha ocurrido un error, vuelva a intentarlo en unos minutos. Si el problema persiste, es posible que haya registrado la misma dirección de correo electrónico con anterioridad.');
+    });
+  }
+
+  function handleClose() {
+    setOpen(false);
+  }
+
   return (
     <Paper alignItems="center" className={classes.paper, classes.calltoaction} style={{backgroundColor: '#7a6800ff', padding: '100px'}}>
       <center>
@@ -33,12 +67,28 @@ export default function Suscribe() {
         </Typography>
       <br />
       <ThemeProvider theme={theme}>
-        <TextField color="black" variant="outlined" style={{alignItems: 'center', backgroundColor: 'white', marginBottom: '10px', marginRight: '15px'}} id="standard-basic" placeholder="Correo Electrónico" />
-        <Button variant="outlined" style={{alignItems: 'center', margin: '10px', color: 'white', backgroundColor: '#111f22ff', marginLeft: '15px'}}>
-          Suscribirme
-        </Button>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            value={email}
+            onChange={handleChange}
+            color="black"
+            variant="outlined"
+            style={{alignItems: 'center', backgroundColor: 'white', marginBottom: '10px', marginRight: '15px'}}
+            id="standard-basic"
+            placeholder="Correo Electrónico"
+          />
+          <Button
+            type="submit"
+            disabled={!canBeSubmitted}
+            variant="outlined"
+            style={{alignItems: 'center', margin: '10px', color: 'white', backgroundColor: '#111f22ff', marginLeft: '15px'}}
+          >
+            Suscribirme
+          </Button>
+        </form>
       </ThemeProvider>
       </center>
+      <SuscribeDialog open={open} closeDialog={handleClose} />
     </Paper>
   );
 }
