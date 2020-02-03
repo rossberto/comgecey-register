@@ -14,7 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Instructions from './Instructions'
-import Logo from './comgecey-01.jpg'
+import logo from './comgecey-02.png'
+import logos from '../../pages/home/images/logos.png';
 
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -23,7 +24,7 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#642213',
+      main: '#111f22',
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
@@ -61,7 +62,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://scontent.fmex8-2.fna.fbcdn.net/v/t1.0-9/49348758_2484510614898189_3238682250610475008_n.jpg?_nc_cat=107&_nc_ohc=w1rQ_x6SoesAX87eL93&_nc_ht=scontent.fmex8-2.fna&oh=27166c04ff1225262acc2532c1d708aa&oe=5E98B4EC)',
+    backgroundImage: `url(${logo})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'dark' ? theme.palette.grey[900] : theme.palette.grey[50],
@@ -127,12 +128,13 @@ export default function Apply() {
   return (
     <ThemeProvider theme={theme}>
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
+      
       <Grid container item xs={12} sm={6} md={7} className={classes.image} >
       {/*<Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square className={classes.image}>*/}
       </Grid>
-      <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square>
-        <Instructions />
+      <Grid item alignItems="center" xs={12} sm={6} md={5} component={Paper} elevation={6} square>
+        {/*<img src={logos} style={{position: 'contained', margin: '50px auto'}} />*/}
+        {/*<Instructions />*/}
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Inicia hoy mismo tu registro.

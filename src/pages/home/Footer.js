@@ -8,6 +8,7 @@ import anmm from './images/ANMM.jpg';
 import conamege from './images/CONAMEGE.jpg';
 import amfem from './images/AMFEM.gif';
 import cncmg from './images/CNCMG.jpg';
+import logos from './images/logos.png';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,12 +70,9 @@ export default function Footer() {
         <center>
           <Typography style={{display: 'inline-block', margin: '20px'}} variant="body1">contacto@comgecey.org</Typography>
           <Button href="https://www.facebook.com/Consejo-de-M%C3%A9dicos-Generales-Certificados-del-Estado-de-Yucat%C3%A1n-1124844300864834/"><img style={{display: 'inline-block', width: '50px', margin: '20px'}} src={fb} /></Button>
+        </center>
           <br />
-          <img src={amc} style={{display: 'inline-block', margin: '20px'}}/>
-          <img src={anmm} style={{display: 'inline-block', margin: '20px'}}/>
-          <img src={amfem} style={{display: 'inline-block', margin: '20px'}}/>
-          <img src={cncmg} style={{display: 'inline-block', margin: '20px'}}/>
-          <img src={conamege} style={{display: 'inline-block', margin: '20px'}}/>
+        <center>
           <Copyright />
         </center>
       </Container>
