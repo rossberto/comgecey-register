@@ -1,24 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
+import { LockOutlinedIcon, Typography, Box, Grid, Paper, Link, Checkbox, FormControlLabel, TextField, CssBaseline, Avatar, Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 import Instructions from './Instructions'
 import logo from './comgecey-02.png'
 import logos from '../../pages/home/images/logos.png';
-
-import { ThemeProvider } from '@material-ui/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const theme = createMuiTheme({
   palette: {
@@ -119,7 +107,15 @@ export default function Apply() {
   function handleSubmit(e) {
     e.preventDefault();
     if (inputs.confirm===inputs.password) {
-      alert('Te hemos enviado un correo de confirmación.');
+      axios.post('http://localhost:4000/api/users', {email: inputs.email, password: inputs.password}).then((response) => {
+        if (response.status === 201) {
+          alert('Te hemos enviado un correo de confirmación.');
+        } else {
+          alert('El correo electrónico ingresado ya ha sido registrado anteriormente.');
+        }
+      }).catch((err) => {
+        alert('Hubo un error en el servidor, favor de intentarlo más tarde.');
+      });
     } else {
       alert('Contraseña no coincide con la confirmación.');
     }
@@ -128,7 +124,7 @@ export default function Apply() {
   return (
     <ThemeProvider theme={theme}>
     <Grid container component="main" className={classes.root}>
-      
+
       <Grid container item xs={12} sm={6} md={7} className={classes.image} >
       {/*<Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square className={classes.image}>*/}
       </Grid>
