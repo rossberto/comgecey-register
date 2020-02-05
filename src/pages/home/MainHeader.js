@@ -26,6 +26,9 @@ export default function MainHeader() {
     <React.Fragment>
       <Paper alignItems="center" className={classes.paper, classes.header}>
         <Container>
+        <Button href="http://app.comgecey.org/signin" variant="standard" style={{ position: "absolute", color: "white", marginTop: "10px"}}>
+          Ingresar
+        </Button>
         <Grid item container spacing={3} alignItems="center">
           <Grid item xs={12} sm={6}>
             <img position="contain" width="100%" className={classes.image} src={logo} />

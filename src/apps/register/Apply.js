@@ -171,12 +171,13 @@ export default function Apply() {
               type="password"
             />
             <Button
-              type="submit"
+              //type="submit"
+              href="/datos/1"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              disabled={canBeSubmitted}
+              //disabled={canBeSubmitted}
             >
               Registrarme
             </Button>
