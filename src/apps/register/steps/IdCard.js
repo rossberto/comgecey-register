@@ -53,7 +53,7 @@ export default function IdCard() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h1">
           Ficha de identificación
         </Typography>
         <form className={classes.form} noValidate>

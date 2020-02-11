@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/datos/:idRegister' component={InscriptionForm} />
+        <Route path='/datos' component={InscriptionForm} />
         <Route exact path='/registro' component={Apply} />
         <Route exact path='/' component={Home} />
         <Redirect to='/' />

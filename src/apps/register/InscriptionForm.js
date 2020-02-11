@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -43,12 +43,16 @@ function getStepContent(step) {
   }
 }
 
-export default function InscriptionForm() {
+export default function InscriptionForm(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-
+/*
+  useEffect(() => {
+    console.log(props.match);
+  }, [props.match]);
+*/
   const isStepOptional = step => {
     return step === 1;
   };

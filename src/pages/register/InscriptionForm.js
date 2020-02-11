@@ -118,12 +118,7 @@ export default function InscriptionForm() {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
+
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -143,7 +138,7 @@ export default function InscriptionForm() {
           </Container>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography variant={'inherit'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <br />
             <Grid container direction="row" justify="center">
               <Grid item>
