@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, Button, Typography, Grid, Container} from '@material-ui/core';
 
@@ -6,6 +6,9 @@ import IdCard from './steps/IdCard';
 import ParticularAddress from './steps/ParticularAddress';
 import MailAddress from './steps/MailAddress';
 import Professional from './steps/Professional';
+
+import axios from 'axios';
+import history from '../../history';
 
 const theme = createMuiTheme({
   palette: {
@@ -63,11 +66,25 @@ function getStepContent(step) {
   }
 }
 
-export default function InscriptionForm() {
+export default function InscriptionForm(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
+
+  useEffect(() => {
+    const userId = props.match.params.userId;
+    const url = 'http://localhost:4000/api/users/' + userId;
+    axios.get(url).then(response => {
+      if (response.data.user.confirmed > 3) {
+        alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
+        history.push('/registro');
+      }
+    }).catch(err => {
+      alert('Permiso denegado, usuario no registrado.');
+      history.push('/registro');
+    });
+  }, [props.match.params]);
 
   const isStepOptional = step => {
     return step === 1;
