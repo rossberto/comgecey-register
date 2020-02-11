@@ -1,15 +1,38 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import {Stepper, Step, StepLabel, Button, Typography, Grid, Container} from '@material-ui/core';
 
 import IdCard from './steps/IdCard';
 import ParticularAddress from './steps/ParticularAddress';
 import MailAddress from './steps/MailAddress';
 import Professional from './steps/Professional';
+
+import axios from 'axios';
+import history from '../../history';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      // light: will be calculated from palette.primary.main,
+      main: '#111f22',
+      // dark: will be calculated from palette.primary.main,
+      // contrastText: will be calculated to contrast with palette.primary.main
+    },
+    secondary: {
+      light: '#0066ff',
+      main: '#0044ff',
+      // dark: will be calculated from palette.secondary.main,
+      contrastText: '#ffcc00',
+    },
+    // Used by `getContrastText()` to maximize the contrast between
+    // the background and the text.
+    contrastThreshold: 3,
+    // Used by the functions below to shift a color's luminance by approximately
+    // two indexes within its tonal palette.
+    // E.g., shift from Red 500 to Red 300 or Red 700.
+    tonalOffset: 0.2,
+  },
+});
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -48,11 +71,21 @@ export default function InscriptionForm(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-/*
+
   useEffect(() => {
-    console.log(props.match);
-  }, [props.match]);
-*/
+    const userId = props.match.params.userId;
+    const url = 'http://localhost:4000/api/users/' + userId;
+    axios.get(url).then(response => {
+      if (response.data.user.confirmed > 3) {
+        alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
+        history.push('/registro');
+      }
+    }).catch(err => {
+      alert('Permiso denegado, usuario no registrado.');
+      history.push('/registro');
+    });
+  }, [props.match.params]);
+
   const isStepOptional = step => {
     return step === 1;
   };
@@ -96,17 +129,13 @@ export default function InscriptionForm(props) {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <div className={classes.root}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
-          }
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
+
           return (
             <Step key={label} {...stepProps}>
               <StepLabel {...labelProps}>{label}</StepLabel>
@@ -116,18 +145,20 @@ export default function InscriptionForm(props) {
       </Stepper>
       <div>
         {activeStep === steps.length ? (
-          <div>
+          <Container>
             <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
+              Hemos recibido tu información exitosamente.
             </Typography>
             <Button onClick={handleReset} className={classes.button}>
-              Reset
+              Reiniciar
             </Button>
-          </div>
+          </Container>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
+            <Typography variant={'inherit'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <br />
+            <Grid container direction="row" justify="center">
+              <Grid item>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Regresar
               </Button>
@@ -140,10 +171,12 @@ export default function InscriptionForm(props) {
               >
                 {activeStep === steps.length - 1 ? 'Terminar' : 'Siguiente'}
               </Button>
-            </div>
+              </Grid>
+            </Grid>
           </div>
         )}
       </div>
     </div>
+    </ThemeProvider>
   );
 }

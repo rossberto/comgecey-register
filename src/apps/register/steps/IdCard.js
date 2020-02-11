@@ -51,10 +51,10 @@ export default function IdCard() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
+      {/*<CssBaseline />*/}
       <div className={classes.paper}>
-        <Typography component="h1" variant="h1">
-          Ficha de identificación
+        <Typography component="h1" variant="h5">
+          Fichas de identificación
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
