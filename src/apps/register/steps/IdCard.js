@@ -90,7 +90,15 @@ export default function IdCard(props) {
 
   useEffect(() => {
     axios.get('http://localhost:4000/api/users/' + props.userId).then(response => {
-      console.log(response);
+      const userData = Object.assign({}, response.data.user);
+      delete userData['email'];
+      delete userData['id'];
+      userData['endpoint'] = '';
+      if (userData.birthdate != undefined) {
+        userData.birthdate = userData.birthdate.slice(0,10);
+      }
+
+      setInputs(userData);
     });
   }, [props.userId]);
 
@@ -115,7 +123,7 @@ export default function IdCard(props) {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                //value={inputs.name}
+                value={inputs.name}
                 name="name"
                 variant="outlined"
                 required
@@ -127,6 +135,7 @@ export default function IdCard(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.father_lname}
                 variant="outlined"
                 required
                 fullWidth
@@ -137,6 +146,7 @@ export default function IdCard(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.mother_lname}
                 variant="outlined"
                 required
                 fullWidth
@@ -147,6 +157,7 @@ export default function IdCard(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.birthdate}
                 variant="outlined"
                 required
                 fullWidth
@@ -164,12 +175,11 @@ export default function IdCard(props) {
                 </InputLabel>
                 <Select
                   native
-                  //value={info.state} //value={state.age}
-                  //onChange={handleChange('age')}
                   labelWidth={labelWidth}
                   inputProps={{
                     name: 'birth_state',
                     id: 'birth_state',
+                    value: inputs.birth_state
                   }}
                   variant={'outlined'}
                 >
@@ -211,6 +221,7 @@ export default function IdCard(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.birth_city}
                 variant="outlined"
                 required
                 fullWidth

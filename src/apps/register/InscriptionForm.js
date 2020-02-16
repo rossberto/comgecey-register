@@ -108,16 +108,13 @@ export default function InscriptionForm(props) {
         } else {
           step_data['confirmed'] = 1;
         }
-        
-        axios.put(apiUrl, step_data).then(response => {
-          console.log(response);
-        });
+
+        axios.put(apiUrl, step_data);
         break;
       default:
 
     }
 
-    console.log(data);
     //setSubmitDisabled(true);
     setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
@@ -148,7 +145,7 @@ export default function InscriptionForm(props) {
         <div className={classes.root}>
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
-              const stepProps = {updateInfo: handleUpdate};
+              const stepProps = {};
               const labelProps = {};
 
               return (
