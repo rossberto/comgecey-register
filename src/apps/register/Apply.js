@@ -169,8 +169,8 @@ export default function Apply() {
               type="password"
             />
             <Button
-              //type="submit"
-              href="/datos/1"
+              type="submit"
+              //href="/datos/1"
               fullWidth
               variant="contained"
               color="primary"

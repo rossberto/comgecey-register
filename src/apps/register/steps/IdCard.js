@@ -50,7 +50,7 @@ export default function IdCard(props) {
       delete userData['email'];
       delete userData['id'];
       userData['endpoint'] = '';
-      if (userData.birthdate !== undefined) {
+      if (userData.birthdate) {
         userData.birthdate = userData.birthdate.slice(0,10);
       }
 
