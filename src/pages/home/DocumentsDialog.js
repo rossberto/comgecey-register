@@ -1,25 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography, Divider, Button} from '@material-ui/core';
-
-const newGenInfo = {
-  title: '',
-  date: '',
-  email: '',
-  phone: '',
-  bank: ''
-}
-
-const placeInfo = {
-  place: '',
-  street: '',
-  number: '',
-  town: '',
-  city: '',
-  state: '',
-  cp: '',
-  phone: ''
-}
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button} from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {

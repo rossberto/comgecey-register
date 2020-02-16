@@ -23,7 +23,7 @@ export default function CallToAction() {
   const classes = useStyles();
 
   return (
-    <Paper alignItems="center" className={classes.paper, classes.calltoaction}>
+    <Paper className={classes.paper+classes.calltoaction}>
       <center><Typography variant="h4">Ahora es más fácil inscribirse desde nuestra plataforma online.</Typography>
       <Typography variant="h4">Fecha límite de inscripción: 29 de Mayo.</Typography>
       <Button href="/registro" variant="outlined" className={classes.button}>

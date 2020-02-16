@@ -62,7 +62,7 @@ export default function Footer() {
       <Container maxWidth="sm">
         <center>
           <Typography style={{display: 'inline-block', margin: '20px'}} variant="body1">contacto@comgecey.org</Typography>
-          <Button href="https://www.facebook.com/Consejo-de-M%C3%A9dicos-Generales-Certificados-del-Estado-de-Yucat%C3%A1n-1124844300864834/"><img style={{display: 'inline-block', width: '50px', margin: '20px'}} src={fb} /></Button>
+          <Button href="https://www.facebook.com/Consejo-de-M%C3%A9dicos-Generales-Certificados-del-Estado-de-Yucat%C3%A1n-1124844300864834/"><img style={{display: 'inline-block', width: '50px', margin: '20px'}} src={fb} alt="facebook-icon" /></Button>
         </center>
           <br />
         <center>

@@ -59,7 +59,6 @@ export default function InscriptionForm(props) {
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
 
   useEffect(() => {
@@ -135,7 +134,7 @@ export default function InscriptionForm(props) {
 
     const values = Object.values(step_data);
 
-    if (values.every(item => item!='')) {
+    if (values.every(item => item !== '')) {
       setSubmitDisabled(false);
     }
   }

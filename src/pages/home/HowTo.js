@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
 import logos from './images/logos.png';
 import DocumentsDialog from './DocumentsDialog';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -27,7 +26,7 @@ export default function HowTo() {
   }
 
   return (
-    <Paper alignItems="center" className={classes.paper} style={{backgroundColor: '#edeec4ff', paddingTop:'70px', paddingBottom:'100px'}}>
+    <Paper className={classes.paper} style={{backgroundColor: '#edeec4ff', paddingTop:'70px', paddingBottom:'100px'}}>
       <Container>
         <Typography variant="h3">
           <center>
@@ -36,7 +35,7 @@ export default function HowTo() {
         </Typography>
         <br />
         <a href="https://www.conamege.org.mx/">
-          <img position="contain" width="100%" src={logos} style={{maxWidth: '500px', margin: '30px auto'}} />
+          <img position="contain" width="100%" src={logos} style={{maxWidth: '500px', margin: '30px auto'}} alt="coname-icon" />
         </a>
         <br />
         <br />
@@ -52,7 +51,7 @@ export default function HowTo() {
               </CardContent>
               <CardActions>
                 <Button href="https://registro.comgecey.org">
-                  <Link to='/registro' style={{color: 'black', textDecoration: 'none'}}>Ir a la Página de Registro</Link>
+                  Ir a la Página de Registro
                 </Button>
               </CardActions>
             </Card>
@@ -64,10 +63,10 @@ export default function HowTo() {
                   2. Realiza el pago de inscripción.
                 </Typography>
                 <br />
-                <Typography variant="h7">$2,500 en la cuenta BBVA 0114591933.</Typography>
+                <Typography variant="body1">$2,500 en la cuenta BBVA 0114591933.</Typography>
                 <br />
                 <br />
-                <Typography variant="h7">El comprobante de pago se te solicitará en el último paso.</Typography>
+                <Typography variant="body1">El comprobante de pago se te solicitará en el último paso.</Typography>
               </CardContent>
             </Card>
           </Grid>
@@ -76,7 +75,7 @@ export default function HowTo() {
               <CardContent style={{textAlign:"left"}}>
                 <Typography variant="h5">3. Ingresa tu documentación.</Typography>
                 <br />
-                <Typography variant="h7">Toda la documentación se sube a la plataforma.</Typography>
+                <Typography variant="body1">Toda la documentación se sube a la plataforma.</Typography>
               </CardContent>
               <CardActions>
                 <Button onClick={handleClick}>Ver documentacion</Button>

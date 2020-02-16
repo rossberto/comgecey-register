@@ -60,7 +60,7 @@ export default function Suscribe() {
   }
 
   return (
-    <Paper alignItems="center" className={classes.paper, classes.calltoaction} style={{backgroundColor: '#7a6800ff', padding: '100px'}}>
+    <Paper className={classes.paper+classes.calltoaction} style={{backgroundColor: '#7a6800ff', padding: '100px'}}>
       <center>
         <Typography variant="h4">
           Suscríbete a nuestro boletín para estar enterado de las próximas convocatorias y eventos.
@@ -71,7 +71,6 @@ export default function Suscribe() {
           <TextField
             value={email}
             onChange={handleChange}
-            color="black"
             variant="outlined"
             style={{alignItems: 'center', backgroundColor: 'white', marginBottom: '10px', marginRight: '15px'}}
             id="standard-basic"
