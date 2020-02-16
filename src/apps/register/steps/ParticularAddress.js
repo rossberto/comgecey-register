@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Select, FormControl, InputLabel, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
@@ -26,42 +26,52 @@ const useStyles = makeStyles(theme => ({
 const baseUrl = 'http://localhost:4000/api/users/';
 
 const addressInfo = {
+  endpoint: '/address',
   street: '',
   number: '',
   town: '',
   city: '',
   state: '',
-  cp: '',
+  zip_code: '',
   phone: ''
 }
 
 export default function ParticularAddress(props) {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
+  const [inputs, setInputs] = useState(addressInfo);
+  const [state, setState] = useState({
     age: '',
     name: 'hai',
   });
 
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
 
   useEffect(() => {
     axios.get(baseUrl + props.userId + '/address').then(response => {
-      console.log(response);
+      const addressData = Object.assign({}, response.data.address);
+      delete addressData['id'];
+      delete addressData['Users_id'];
+      addressData['endpoint'] = '/address';
+
+      setInputs(addressData);
     });
-  });
+  }, [props.userId]);
 
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
-  };
+  useEffect(() => {
+    props.handleUpdate(inputs);
+  }, [inputs]);
+
+  function handleChange(e) {
+    e.preventDefault();
+
+    setInputs({...inputs, [e.target.name]:e.target.value});
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -70,10 +80,11 @@ export default function ParticularAddress(props) {
         <Typography component="h1" variant="h5">
           Domicilio particular
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onChange={handleChange}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={8}>
               <TextField
+                value={inputs.street}
                 name="street"
                 variant="outlined"
                 required
@@ -85,6 +96,7 @@ export default function ParticularAddress(props) {
             </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
+                value={inputs.number}
                 variant="outlined"
                 required
                 fullWidth
@@ -95,6 +107,7 @@ export default function ParticularAddress(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.town}
                 variant="outlined"
                 required
                 fullWidth
@@ -105,12 +118,13 @@ export default function ParticularAddress(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.city}
                 variant="outlined"
                 required
                 fullWidth
-                name="ciudad"
+                name="city"
                 label="Ciudad"
-                id="ciudad"
+                id="city"
               />
             </Grid>
             <Grid item xs={12}>
@@ -121,12 +135,11 @@ export default function ParticularAddress(props) {
                 <Select
 
                   native
-                  value={state.age}
-                  onChange={handleChange('age')}
+                  value={inputs.state}
                   labelWidth={labelWidth}
                   inputProps={{
-                    name: 'age',
-                    id: 'outlined-age-native-simple',
+                    name: 'state',
+                    id: 'state',
                   }}
                 >
                   <option value="no">Seleccione uno...</option>
@@ -167,22 +180,24 @@ export default function ParticularAddress(props) {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.zip_code}
                 variant="outlined"
                 required
                 fullWidth
-                name="zipcode"
+                name="zip_code"
                 label="Código Postal"
-                id="zipcode"
+                id="zip_code"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.phone}
                 variant="outlined"
                 required
                 fullWidth
-                name="phone_number"
+                name="phone"
                 label="Número telefónico"
-                id="phone_number"
+                id="phone"
               />
             </Grid>
 

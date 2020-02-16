@@ -84,11 +84,11 @@ export default function InscriptionForm(props) {
       case 0:
         return <IdCard handleUpdate={handleUpdate} userId={user.id} />;
       case 1:
-        return <ParticularAddress />;
+        return <ParticularAddress handleUpdate={handleUpdate} userId={user.id} />;
       case 2:
-        return <MailAddress />;
+        return <MailAddress handleUpdate={handleUpdate} userId={user.id} />;
       case 3:
-        return <Professional />;
+        return <Professional handleUpdate={handleUpdate} userId={user.id} />;
       default:
         return 'Unknown step';
     }
@@ -107,8 +107,16 @@ export default function InscriptionForm(props) {
         } else {
           step_data['confirmed'] = 1;
         }
-
         axios.put(apiUrl, step_data);
+        break;
+      case '/address':
+        if (user.confirmed === 1) {
+          axios.post(apiUrl, step_data).then(response => {
+            axios.put(baseUrl + user.id, {confirmed: 2});
+          });
+        } else {
+          axios.put(apiUrl, step_data);
+        }
         break;
       default:
 
