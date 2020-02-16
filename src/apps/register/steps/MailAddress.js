@@ -1,6 +1,7 @@
-import React from 'react';
-import { Select, FormControl, InputLabel, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
+import React, { useState, useEffect, useRef } from 'react';
+import { FormControlLabel, Checkbox, Select, FormControl, InputLabel, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -22,26 +23,67 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MailAddress() {
+const addressInfo = {
+  endpoint: '/mail',
+  street: '',
+  number: '',
+  town: '',
+  city: '',
+  state: '',
+  zip_code: '',
+  phone: ''
+}
+
+const baseUrl = 'http://localhost:4000/api/users/';
+
+export default function MailAddress(props) {
   const classes = useStyles();
 
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     age: '',
     name: 'hai',
   });
 
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
+  const [inputs, setInputs] = useState(addressInfo);
+  const inputLabel = useRef(null);
+  const [labelWidth, setLabelWidth] = useState(0);
+  useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = name => event => {
-    setState({
-      ...state,
-      [name]: event.target.value,
+  useEffect(() => {
+    axios.get(baseUrl + props.userId + '/mail').then(response => {
+      const addressData = Object.assign({}, response.data.mail);
+      delete addressData['id'];
+      delete addressData['Users_id'];
+      addressData['endpoint'] = '/mail';
+
+      setInputs(addressData);
     });
-  };
+  }, [props.userId]);
+
+  useEffect(() => {
+    props.handleUpdate(inputs);
+  }, [inputs]);
+
+  function handleChange(e) {
+    e.preventDefault();
+
+    if (e.target.name === 'same-address') {
+      if (e.target.checked) {
+        axios.get(baseUrl + props.userId + '/address').then(response => {
+          const addressData = Object.assign({}, response.data.address);
+          delete addressData['id'];
+          delete addressData['Users_id'];
+          addressData['endpoint'] = '/mail';
+
+          setInputs(addressData);
+        });
+      }
+    } else {
+      setInputs({...inputs, [e.target.name]:e.target.value});
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -50,10 +92,11 @@ export default function MailAddress() {
         <Typography component="h1" variant="h5">
           Domicilio para correspondencia
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onChange={handleChange}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.street}
                 name="street"
                 variant="outlined"
                 required
@@ -65,6 +108,7 @@ export default function MailAddress() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.number}
                 variant="outlined"
                 required
                 fullWidth
@@ -75,6 +119,7 @@ export default function MailAddress() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.town}
                 variant="outlined"
                 required
                 fullWidth
@@ -85,28 +130,28 @@ export default function MailAddress() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.city}
                 variant="outlined"
                 required
                 fullWidth
-                name="ciudad"
+                name="city"
                 label="Ciudad"
-                id="ciudad"
+                id="city"
               />
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth variant="outlined" className={classes.formControl}>
                 <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
-                  Age
+                  Estado
                 </InputLabel>
                 <Select
 
                   native
-                  value={state.age}
-                  onChange={handleChange('age')}
+                  value={inputs.state}
                   labelWidth={labelWidth}
                   inputProps={{
-                    name: 'age',
-                    id: 'outlined-age-native-simple',
+                    name: 'state',
+                    id: 'state',
                   }}
                 >
                   <option value="no">Seleccione uno...</option>
@@ -147,26 +192,40 @@ export default function MailAddress() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.zip_code}
                 variant="outlined"
                 required
                 fullWidth
-                name="zipcode"
+                name="zip_code"
                 label="Código Postal"
-                id="zipcode"
+                id="zip_code"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.phone}
                 variant="outlined"
                 required
                 fullWidth
-                name="phone_number"
+                name="phone"
                 label="Número telefónico"
-                id="phone_number"
+                id="phone"
               />
             </Grid>
 
           </Grid>
+          <FormControlLabel
+            control={
+              <Checkbox
+                name="same-address"
+                //checked={state.checkedB}
+                //onChange={handleChange('checkedB')}
+                //value="checkedB"
+                color="primary"
+              />
+            }
+            label="Mismo domicilio que el particular."
+          />
         </form>
       </div>
     </Container>

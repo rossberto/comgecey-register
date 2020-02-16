@@ -118,6 +118,15 @@ export default function InscriptionForm(props) {
           axios.put(apiUrl, step_data);
         }
         break;
+      case '/mail':
+        if (user.confirmed === 2) {
+          axios.post(apiUrl, step_data).then(response => {
+            axios.put(baseUrl + user.id, {confirmed: 3});
+          });
+        } else {
+          axios.put(apiUrl, step_data);
+        }
+        break;
       default:
 
     }
@@ -136,6 +145,7 @@ export default function InscriptionForm(props) {
 
   function handleUpdate(cb_data) {
     setData(cb_data);
+    console.log(cb_data);
 
     const step_data = Object.assign({}, cb_data);
     delete step_data['endpoint'];
