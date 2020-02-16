@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, Button, Typography, Grid, Container} from '@material-ui/core';
-
 import IdCard from './steps/IdCard';
 import ParticularAddress from './steps/ParticularAddress';
 import MailAddress from './steps/MailAddress';
 import Professional from './steps/Professional';
-
 import axios from 'axios';
 import history from '../../history';
 
@@ -51,23 +49,13 @@ function getSteps() {
   return ['Ficha de identificación', 'Domicilio particular', 'Domicilio para correspondencia', 'Licenciatura'];
 }
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <IdCard />;
-    case 1:
-      return <ParticularAddress />;
-    case 2:
-      return <MailAddress />;
-    case 3:
-      return <Professional />;
-    default:
-      return 'Unknown step';
-  }
-}
-
 export default function InscriptionForm(props) {
   const classes = useStyles();
+
+  const [data, setData] = useState({});
+  const [userId, setUserId] = useState('');
+  const [submitDisabled, setSubmitDisabled] = useState(true);
+
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
@@ -80,103 +68,106 @@ export default function InscriptionForm(props) {
         alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
         history.push('/registro');
       }
+      setUserId(response.data.user.id);
     }).catch(err => {
       alert('Permiso denegado, usuario no registrado.');
       history.push('/registro');
     });
   }, [props.match.params]);
 
-  const isStepOptional = step => {
-    return step === 1;
-  };
-
-  const isStepSkipped = step => {
-    return skipped.has(step);
-  };
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <IdCard handleUpdate={handleUpdate} userId={userId} />;
+      case 1:
+        return <ParticularAddress />;
+      case 2:
+        return <MailAddress />;
+      case 3:
+        return <Professional />;
+      default:
+        return 'Unknown step';
+    }
+  }
 
   const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
+    //axios.post()
+    console.log(data);
+    //setSubmitDisabled(true);
     setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-    setSkipped(prevSkipped => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
   const handleReset = () => {
     setActiveStep(0);
   };
 
+  function handleUpdate(cb_data) {
+    setData(cb_data);
+
+    const step_data = Object.assign({}, cb_data);
+    delete step_data['endpoint'];
+
+    const values = Object.values(step_data);
+
+    if (values.every(item => item!='')) {
+      setSubmitDisabled(false);
+    }
+  }
+
   return (
-    <ThemeProvider theme={theme}>
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <Stepper activeStep={activeStep}>
+            {steps.map((label, index) => {
+              const stepProps = {updateInfo: handleUpdate};
+              const labelProps = {};
 
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <Container>
-            <Typography className={classes.instructions}>
-              Hemos recibido tu información exitosamente.
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reiniciar
-            </Button>
-          </Container>
-        ) : (
+              return (
+                <Step key={label} {...stepProps}>
+                  <StepLabel {...labelProps}>{label}</StepLabel>
+                </Step>
+              );
+            })}
+          </Stepper>
           <div>
-            <Typography variant={'inherit'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <br />
-            <Grid container direction="row" justify="center">
-              <Grid item>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Regresar
-              </Button>
+            {activeStep === steps.length ? (
+              <Container>
+                <Typography className={classes.instructions}>
+                  Hemos recibido tu información exitosamente.
+                </Typography>
+                <Button onClick={handleReset} className={classes.button}>
+                  Reiniciar
+                </Button>
+              </Container>
+            ) : (
+              <div>
+                <Typography variant={'inherit'} className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                <br />
+                <Grid container direction="row" justify="center">
+                  <Grid item>
+                  <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                    Regresar
+                  </Button>
 
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? 'Terminar' : 'Siguiente'}
-              </Button>
-              </Grid>
-            </Grid>
+                  <Button
+                    disabled={submitDisabled}
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1 ? 'Terminar' : 'Siguiente'}
+                  </Button>
+                  </Grid>
+                </Grid>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
-    </ThemeProvider>
+        </div>
+      </ThemeProvider>
   );
 }

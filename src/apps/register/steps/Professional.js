@@ -236,15 +236,6 @@ export default function Profesional() {
             </Grid>
 
           </Grid>
-
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Guardar
-          </Button>
         </form>
       </div>
     </Container>

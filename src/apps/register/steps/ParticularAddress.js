@@ -198,15 +198,6 @@ export default function ParticularAddress() {
             </Grid>
 
           </Grid>
-
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Guardar
-          </Button>
         </form>
       </div>
     </Container>
