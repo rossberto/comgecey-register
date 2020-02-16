@@ -1,14 +1,7 @@
 import React from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {IconButton, Divider, TextField, Link, Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
-import { amber } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link, Typography, Container, Button } from '@material-ui/core';
 import fb from './images/f_logo_RGB-Black_72.png';
-import amc from './images/AMC.jpg';
-import anmm from './images/ANMM.jpg';
-import conamege from './images/CONAMEGE.jpg';
-import amfem from './images/AMFEM.gif';
-import cncmg from './images/CNCMG.jpg';
-import logos from './images/logos.png';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -1,21 +1,7 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
-import { InputLabel, Select, FormControl, Container, Typography, Grid, Box, Link, Checkbox, FormControlLabel, TextField, Avatar, Button, CssBaseline } from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import React, { useState, useEffect, useRef } from 'react';
+import { InputLabel, Select, FormControl, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Comgecey
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -48,16 +34,6 @@ const idInfo = {
   birth_state: ''
 }
 
-const addressInfo = {
-  street: '',
-  number: '',
-  town: '',
-  city: '',
-  state: '',
-  cp: '',
-  phone: ''
-}
-
 const professionalInfo = {
   school: '',
   startDate: '',
@@ -81,7 +57,6 @@ export default function IdCard(props) {
   const classes = useStyles();
 
   const [inputs, setInputs] = useState(idInfo);
-  const [editDisabled, setEditDisabled] = useState(false);
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
   useEffect(() => {
@@ -94,7 +69,7 @@ export default function IdCard(props) {
       delete userData['email'];
       delete userData['id'];
       userData['endpoint'] = '';
-      if (userData.birthdate != undefined) {
+      if (userData.birthdate !== undefined) {
         userData.birthdate = userData.birthdate.slice(0,10);
       }
 

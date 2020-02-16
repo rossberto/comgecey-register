@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import { LockOutlinedIcon, Typography, Box, Grid, Paper, Link, Checkbox, FormControlLabel, TextField, CssBaseline, Avatar, Button} from '@material-ui/core';
+import { Typography, Box, Grid, Paper, Link, TextField, Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import Instructions from './Instructions'
 import logo from './comgecey-02.png'
-import logos from '../../pages/home/images/logos.png';
 import axios from 'axios';
 
 const theme = createMuiTheme({

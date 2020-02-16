@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {Dialog, DialogTitle, DialogContent, DialogActions, Grid, Typography, Divider, Button} from '@material-ui/core';
+import {Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button} from '@material-ui/core';
 
 export default function DocumentsDialog(props) {
   return (

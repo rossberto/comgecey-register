@@ -1,37 +1,7 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
+import React, { useEffect } from 'react';
+import { Select, FormControl, InputLabel, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Comgecey
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -53,7 +23,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ParticularAddress() {
+const baseUrl = 'http://localhost:4000/api/users/';
+
+const addressInfo = {
+  street: '',
+  number: '',
+  town: '',
+  city: '',
+  state: '',
+  cp: '',
+  phone: ''
+}
+
+export default function ParticularAddress(props) {
   const classes = useStyles();
 
   const [state, setState] = React.useState({
@@ -63,7 +45,14 @@ export default function ParticularAddress() {
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
+
+  useEffect(() => {
+    axios.get(baseUrl + props.userId + '/address').then(response => {
+      console.log(response);
+    });
+  });
+
+  useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 

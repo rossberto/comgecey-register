@@ -1,7 +1,6 @@
 import React from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {IconButton, Divider, TextField, Link, Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
-import { amber } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import { Paper, Grid, Typography, Container, Button} from '@material-ui/core';
 import logo from './images/comgecey-02.png';
 
 const useStyles = makeStyles(theme => ({

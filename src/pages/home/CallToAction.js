@@ -1,8 +1,6 @@
 import React from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {IconButton, Divider, TextField, Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
-import { amber } from '@material-ui/core/colors';
-import { Link } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import { Paper, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   paper: {

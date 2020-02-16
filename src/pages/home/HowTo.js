@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {IconButton, Divider, TextField, Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
-import { amber } from '@material-ui/core/colors';
+import { makeStyles } from '@material-ui/core/styles';
+import { Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
 import logos from './images/logos.png';
 import DocumentsDialog from './DocumentsDialog';
 import { Link } from 'react-router-dom';

@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import {IconButton, Divider, TextField, Link, Paper, Grid, Typography, Container, Button, Card, CardContent, CardActions} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Divider, Grid } from '@material-ui/core';
 
 import MainHeader from './MainHeader';
 import CallToAction from './CallToAction';
