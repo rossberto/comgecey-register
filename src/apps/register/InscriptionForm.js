@@ -127,6 +127,15 @@ export default function InscriptionForm(props) {
           axios.put(apiUrl, step_data);
         }
         break;
+      case '/professional':
+        if (user.confirmed === 3) {
+          axios.post(apiUrl, step_data).then(response => {
+            axios.put(baseUrl + user.id, {confirmed: 4});
+          });
+        } else {
+          axios.put(apiUrl, step_data);
+        }
+        break;
       default:
 
     }

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -22,8 +23,58 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Profesional() {
+const baseUrl = 'http://localhost:4000/api/users/';
+
+const professionalInfo = {
+  endpoint: '/professional',
+  school: '',
+  start_date: '',
+  finish_date: '',
+  intership: '',
+  start_date_internship: '',
+  finish_date_internship: '',
+  social_service: '',
+  start_date_social: '',
+  finish_date_social: '',
+  exam_date: '',
+  exam_type: '',
+  tesis: '',
+  professional_id: '',
+  professional_id_date: '',
+  book: '',
+  ssa: ''
+}
+
+export default function Profesional(props) {
   const classes = useStyles();
+
+  const [inputs, setInputs] = useState(professionalInfo);
+
+  useEffect(() => {
+    axios.get(baseUrl + props.userId + '/professional').then(response => {
+      const professionalData = Object.assign({}, response.data.professional);
+      delete professionalData['id'];
+      delete professionalData['Users_id'];
+      professionalData['endpoint'] = '/professional';
+
+      const dates = ['start_date', 'finish_date', 'start_date_internship', 'finish_date_internship', 'start_date_social', 'finish_date_social', 'exam_date', 'professional_id_date']
+      dates.forEach(date => {
+        professionalData[date] = professionalData[date].slice(0, 10);
+      });
+
+      setInputs(professionalData);
+    });
+  }, [props.userId]);
+
+  useEffect(() => {
+    props.handleUpdate(inputs);
+  }, [inputs]);
+
+  function handleChange(e) {
+    e.preventDefault();
+
+    setInputs({...inputs, [e.target.name]:e.target.value});
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -32,10 +83,11 @@ export default function Profesional() {
         <Typography component="h1" variant="h5">
           Licenciatura
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onChange={handleChange}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                value={inputs.school}
                 name="school"
                 variant="outlined"
                 required
@@ -47,6 +99,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.start_date}
                 variant="outlined"
                 required
                 fullWidth
@@ -59,6 +112,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.finish_date}
                 variant="outlined"
                 required
                 fullWidth
@@ -71,16 +125,18 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.intership}
                 variant="outlined"
                 required
                 fullWidth
-                id="internship"
+                id="intership"
                 label="Sitio donde realizó el internado"
-                name="internship"
+                name="intership"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.start_date_internship}
                 variant="outlined"
                 required
                 fullWidth
@@ -93,6 +149,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.finish_date_internship}
                 variant="outlined"
                 required
                 fullWidth
@@ -105,6 +162,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.social_service}
                 variant="outlined"
                 required
                 fullWidth
@@ -115,6 +173,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.start_date_social}
                 variant="outlined"
                 required
                 fullWidth
@@ -127,6 +186,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                value={inputs.finish_date_social}
                 variant="outlined"
                 required
                 fullWidth
@@ -139,6 +199,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.exam_date}
                 variant="outlined"
                 required
                 fullWidth
@@ -151,6 +212,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.exam_type}
                 variant="outlined"
                 required
                 fullWidth
@@ -161,6 +223,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.tesis}
                 variant="outlined"
                 fullWidth
                 name="tesis"
@@ -170,28 +233,31 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.professional_id}
                 variant="outlined"
                 required
                 fullWidth
-                name="profesional_id"
+                name="professional_id"
                 label="Número de Cédula Profesional"
-                id="profesional_id"
+                id="professional_id"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.professional_id_date}
                 variant="outlined"
                 required
                 fullWidth
-                name="profesional_id_date"
+                name="professional_id_date"
                 label="Fecha de Expedición de Cédula Profesional"
                 type="date"
-                id="profesional_id_date"
+                id="professional_id_date"
                 InputLabelProps={{shrink: true}}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.book}
                 variant="outlined"
                 required
                 fullWidth
@@ -202,6 +268,7 @@ export default function Profesional() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                value={inputs.ssa}
                 variant="outlined"
                 required
                 fullWidth

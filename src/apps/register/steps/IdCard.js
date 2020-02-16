@@ -34,25 +34,6 @@ const idInfo = {
   birth_state: ''
 }
 
-const professionalInfo = {
-  school: '',
-  startDate: '',
-  endDate: '',
-  internship: '',
-  internStartDate: '',
-  internEndDate: '',
-  ss: '',
-  ssStartDate: '',
-  ssEndDate: '',
-  examDate: '',
-  examType: '',
-  examTitle: '',
-  book: '',
-  profId: '',
-  profIdDate: '',
-  ssa: ''
-}
-
 export default function IdCard(props) {
   const classes = useStyles();
 
