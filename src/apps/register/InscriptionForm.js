@@ -49,11 +49,13 @@ function getSteps() {
   return ['Ficha de identificación', 'Domicilio particular', 'Domicilio para correspondencia', 'Licenciatura'];
 }
 
+const baseUrl = 'http://localhost:4000/api/users/';
+
 export default function InscriptionForm(props) {
   const classes = useStyles();
 
   const [data, setData] = useState({});
-  const [userId, setUserId] = useState('');
+  const [user, setUser] = useState({id: '', confirmed: 0});
   const [submitDisabled, setSubmitDisabled] = useState(true);
 
   const [activeStep, setActiveStep] = React.useState(0);
@@ -62,13 +64,16 @@ export default function InscriptionForm(props) {
 
   useEffect(() => {
     const userId = props.match.params.userId;
-    const url = 'http://localhost:4000/api/users/' + userId;
+    const url = baseUrl + userId;
     axios.get(url).then(response => {
       if (response.data.user.confirmed > 3) {
         alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
         history.push('/registro');
       }
-      setUserId(response.data.user.id);
+      setUser({
+        id: response.data.user.id,
+        confirmed: response.data.user.confirmed
+      });
     }).catch(err => {
       alert('Permiso denegado, usuario no registrado.');
       history.push('/registro');
@@ -78,7 +83,7 @@ export default function InscriptionForm(props) {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <IdCard handleUpdate={handleUpdate} userId={userId} />;
+        return <IdCard handleUpdate={handleUpdate} userId={user.id} />;
       case 1:
         return <ParticularAddress />;
       case 2:
@@ -91,7 +96,27 @@ export default function InscriptionForm(props) {
   }
 
   const handleNext = () => {
-    //axios.post()
+    const step_data = Object.assign({}, data);
+    delete step_data['endpoint'];
+
+    const apiUrl = baseUrl + user.id + data.endpoint;
+
+    switch (data.endpoint) {
+      case '':
+        if (user.confirmed > 0) {
+          step_data['confirmed'] = user.confirmed;
+        } else {
+          step_data['confirmed'] = 1;
+        }
+        
+        axios.put(apiUrl, step_data).then(response => {
+          console.log(response);
+        });
+        break;
+      default:
+
+    }
+
     console.log(data);
     //setSubmitDisabled(true);
     setActiveStep(prevActiveStep => prevActiveStep + 1);
