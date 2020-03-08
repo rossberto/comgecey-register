@@ -40,14 +40,12 @@ export default function ParticularAddress(props) {
   const classes = useStyles();
 
   const [inputs, setInputs] = useState(addressInfo);
-  const [state, setState] = useState({
-    age: '',
-    name: 'hai',
-  });
-
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);
-
+  useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+  
   useEffect(() => {
     axios.get(baseUrl + props.userId + '/address').then(response => {
       const addressData = Object.assign({}, response.data.address);
@@ -58,10 +56,6 @@ export default function ParticularAddress(props) {
       setInputs(addressData);
     });
   }, [props.userId]);
-
-  useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
 
   useEffect(() => {
     props.handleUpdate(inputs);

@@ -69,6 +69,7 @@ export default function InscriptionForm(props) {
         alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
         history.push('/registro');
       }
+
       setUser({
         id: response.data.user.id,
         confirmed: response.data.user.confirmed
@@ -102,17 +103,28 @@ export default function InscriptionForm(props) {
 
     switch (data.endpoint) {
       case '':
+        let newConfirmed = 0;
         if (user.confirmed > 0) {
           step_data['confirmed'] = user.confirmed;
+          newConfirmed = user.confirmed;
         } else {
           step_data['confirmed'] = 1;
+          newConfirmed = 1;
         }
-        axios.put(apiUrl, step_data);
+        axios.put(apiUrl, step_data).then(response => {
+          if (response.statusText === 'OK') {
+            setUser({...user, confirmed: newConfirmed})
+          }
+        });
         break;
       case '/address':
         if (user.confirmed === 1) {
           axios.post(apiUrl, step_data).then(response => {
-            axios.put(baseUrl + user.id, {confirmed: 2});
+            axios.put(baseUrl + user.id, {confirmed: 2}).then(response => {
+              if (response.statusText === 'OK') {
+                setUser({...user, confirmed: 2})
+              }
+            });
           });
         } else {
           axios.put(apiUrl, step_data);
@@ -121,7 +133,11 @@ export default function InscriptionForm(props) {
       case '/mail':
         if (user.confirmed === 2) {
           axios.post(apiUrl, step_data).then(response => {
-            axios.put(baseUrl + user.id, {confirmed: 3});
+            axios.put(baseUrl + user.id, {confirmed: 3}).then(response => {
+              if (response.statusText === 'OK') {
+                setUser({...user, confirmed: 3})
+              }
+            });
           });
         } else {
           axios.put(apiUrl, step_data);
@@ -130,7 +146,11 @@ export default function InscriptionForm(props) {
       case '/professional':
         if (user.confirmed === 3) {
           axios.post(apiUrl, step_data).then(response => {
-            axios.put(baseUrl + user.id, {confirmed: 4});
+            axios.put(baseUrl + user.id, {confirmed: 4}).then(response => {
+              if (response.statusText === 'OK') {
+                setUser({...user, confirmed: 4});
+              }
+            });
           });
         } else {
           axios.put(apiUrl, step_data);
@@ -154,7 +174,6 @@ export default function InscriptionForm(props) {
 
   function handleUpdate(cb_data) {
     setData(cb_data);
-    console.log(cb_data);
 
     const step_data = Object.assign({}, cb_data);
     delete step_data['endpoint'];
