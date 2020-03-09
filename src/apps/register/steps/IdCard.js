@@ -31,7 +31,7 @@ const idInfo = {
   mother_lname: '',
   birthdate: '',
   birth_city: '',
-  birth_state: ''
+  birth_state: 'no'
 }
 
 export default function IdCard(props) {
@@ -53,12 +53,14 @@ export default function IdCard(props) {
       if (userData.birthdate) {
         userData.birthdate = userData.birthdate.slice(0,10);
       }
+      console.log(userData);
 
       setInputs(userData);
     });
   }, [props.userId]);
 
   useEffect(() => {
+    console.log(inputs);
     props.handleUpdate(inputs);
   }, [inputs]);
 
@@ -125,19 +127,18 @@ export default function IdCard(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <FormControl fullWidth className={classes.formControl}>
-                <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple">
+              <FormControl fullWidth variant="outlined" className={classes.formControl}>
+                <InputLabel ref={inputLabel} htmlFor="standard-age-native-simple" >
                   Estado de Nacimiento
                 </InputLabel>
                 <Select
                   native
+                  value= {inputs.birth_state}
                   labelWidth={labelWidth}
                   inputProps={{
                     name: 'birth_state',
                     id: 'birth_state',
-                    value: inputs.birth_state
                   }}
-                  variant={'outlined'}
                 >
                   <option value="no">Seleccione uno...</option>
                   <option value="Aguascalientes">Aguascalientes</option>

@@ -45,13 +45,21 @@ export default function ParticularAddress(props) {
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
-  
+
   useEffect(() => {
     axios.get(baseUrl + props.userId + '/address').then(response => {
       const addressData = Object.assign({}, response.data.address);
       delete addressData['id'];
       delete addressData['Users_id'];
       addressData['endpoint'] = '/address';
+
+      ['street', 'number', 'town', 'city', 'state', 'zip_code', 'phone'].forEach(att => {
+        if (!addressData.hasOwnProperty(att)) {
+          addressData[att] = '';
+        }
+      });
+
+      console.log(addressData);
 
       setInputs(addressData);
     });
@@ -127,7 +135,6 @@ export default function ParticularAddress(props) {
                   Estado
                 </InputLabel>
                 <Select
-
                   native
                   value={inputs.state}
                   labelWidth={labelWidth}

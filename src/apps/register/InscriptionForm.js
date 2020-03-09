@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, Button, Typography, Grid, Container} from '@material-ui/core';
 import IdCard from './steps/IdCard';
@@ -66,7 +67,7 @@ export default function InscriptionForm(props) {
     const userId = props.match.params.userId;
     const url = baseUrl + userId;
     axios.get(url).then(response => {
-      if (response.data.user.confirmed > 4) {
+      if (response.data.user.confirmed > 3) {
         alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
         history.push('/registro');
       }
@@ -161,24 +162,33 @@ export default function InscriptionForm(props) {
               if (response.statusText === 'OK') {
                 setUser({...user, confirmed: 4});
               }
+            }).then(() => {
+              axios.post(baseUrl + props.match.params.userId + '/form').then(response => {
+                if (response.statusText === 'Created') {
+                  setFormPath('http://localhost:4000/api/users/' + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
+                }
+              }).then(() => {
+                setActiveStep(prevActiveStep => prevActiveStep + 1);
+              });
             });
           });
         } else {
-          axios.put(apiUrl, step_data);
+          axios.put(apiUrl, step_data).then(() => {
+            axios.post(baseUrl + props.match.params.userId + '/form').then(response => {
+              if (response.statusText === 'Created') {
+                setFormPath('http://localhost:4000/api/users/' + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
+              }
+            }).then(() => {
+              setActiveStep(prevActiveStep => prevActiveStep + 1);
+            });
+          });
         }
-        axios.post(baseUrl + props.match.params.userId + '/form').then(response => {
-          if (response.statusText === 'Created') {
-            setFormPath('http://localhost:4000/api/users/' + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
-          }
-        }).then(() => {
-          setActiveStep(prevActiveStep => prevActiveStep + 1);
-        });
         break;
       default:
 
     }
 
-    //setSubmitDisabled(true);
+    setSubmitDisabled(true);
     //setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
@@ -198,8 +208,13 @@ export default function InscriptionForm(props) {
 
     const values = Object.values(step_data);
 
-    if (values.every(item => item !== '')) {
+    const notEmpty = values.every(item => item !== '');
+    const notNull = values.every(item => item !== null);
+
+    if (notEmpty && notNull && values.length > 0) {
       setSubmitDisabled(false);
+    } else {
+      setSubmitDisabled(true);
     }
   }
 
@@ -221,28 +236,35 @@ export default function InscriptionForm(props) {
           <div>
             {activeStep === steps.length ? (
               <Container>
+                <Typography variant="h4" gutterBottom>Instrucciones</Typography>
                 <Typography className={classes.instructions}>
-                  Revisa que todos los datos se hayan ingresado correctamente.
+                  1. Revisa que todos los datos se hayan ingresado correctamente.
                 </Typography>
                 <Typography className={classes.instructions}>
-                  Si necesitas corregir algo presiona el botón reiniciar.
+                  2. Si necesitas corregir algo presiona el botón reiniciar.
                 </Typography>
                 <Typography className={classes.instructions}>
-                  Si todo está correcto, descarga el formato, imprímelo, fírmalo
+                  3. Si todo está correcto, descarga el formato, imprímelo, fírmalo
                   y escanéalo, la siguiente vez que entres a la plataforma podrás subirlo.
                 </Typography>
                 <Typography className={classes.instructions}>
                   También deberás presentar este documento en original el día del examen.
                 </Typography>
 
-                <object width="100%" height="400" data={formPath} type="application/pdf">   </object>
+                <object width="100%" height="500" data={formPath} type="application/pdf">   </object>
 
-                <Button onClick={handleReset} className={classes.button}>
-                  Reiniciar
-                </Button>
-                <Button href="http://app.comgecey.org/signin" className={classes.button}>
-                  Terminar
-                </Button>
+                <div align="center">
+
+                  <Button onClick={handleReset} className={classes.button}>
+                    Reiniciar
+                  </Button>
+                  <Button href={formPath} className={classes.button} download target="_blank">
+                    Descargar
+                  </Button>
+                  <Button href="http://app.comgecey.org/signin" className={classes.button}>
+                    Terminar
+                  </Button>
+                </div>
               </Container>
             ) : (
               <div>
