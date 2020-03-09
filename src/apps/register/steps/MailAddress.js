@@ -39,11 +39,6 @@ const baseUrl = 'http://localhost:4000/api/users/';
 export default function MailAddress(props) {
   const classes = useStyles();
 
-  const [state, setState] = useState({
-    age: '',
-    name: 'hai',
-  });
-
   const [inputs, setInputs] = useState(addressInfo);
   const inputLabel = useRef(null);
   const [labelWidth, setLabelWidth] = useState(0);

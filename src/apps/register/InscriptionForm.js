@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, Button, Typography, Grid, Container} from '@material-ui/core';
 import IdCard from './steps/IdCard';
@@ -8,7 +7,6 @@ import MailAddress from './steps/MailAddress';
 import Professional from './steps/Professional';
 import axios from 'axios';
 import history from '../../history';
-import { Document, Page } from 'react-pdf';
 
 const theme = createMuiTheme({
   palette: {
@@ -201,6 +199,7 @@ export default function InscriptionForm(props) {
   };
 
   function handleUpdate(cb_data) {
+    console.log(cb_data);
     setData(cb_data);
 
     const step_data = Object.assign({}, cb_data);

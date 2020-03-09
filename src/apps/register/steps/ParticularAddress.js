@@ -59,8 +59,6 @@ export default function ParticularAddress(props) {
         }
       });
 
-      console.log(addressData);
-
       setInputs(addressData);
     });
   }, [props.userId]);

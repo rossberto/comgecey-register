@@ -78,7 +78,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Apply() {
   const classes = useStyles();
-  const [canBeSubmitted, setCanBeSubmitted] = useState(true);
+  const [canBeSubmitted, setCanBeSubmitted] = useState(false);
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -126,7 +126,7 @@ export default function Apply() {
       <Grid container item xs={12} sm={6} md={7} className={classes.image} >
       {/*<Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square className={classes.image}>*/}
       </Grid>
-      <Grid item alignItems="center" xs={12} sm={6} md={5} component={Paper} elevation={6} square>
+      <Grid item  xs={12} sm={6} md={5} component={Paper} elevation={6} square>
         {/*<img src={logos} style={{position: 'contained', margin: '50px auto'}} />*/}
         {/*<Instructions />*/}
         <div className={classes.paper}>
@@ -175,7 +175,7 @@ export default function Apply() {
               variant="contained"
               color="primary"
               className={classes.submit}
-              //disabled={canBeSubmitted}
+              disabled={canBeSubmitted}
             >
               Registrarme
             </Button>
