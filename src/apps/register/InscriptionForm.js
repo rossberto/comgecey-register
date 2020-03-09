@@ -7,6 +7,7 @@ import MailAddress from './steps/MailAddress';
 import Professional from './steps/Professional';
 import axios from 'axios';
 import history from '../../history';
+import { Document, Page } from 'react-pdf';
 
 const theme = createMuiTheme({
   palette: {
@@ -57,7 +58,7 @@ export default function InscriptionForm(props) {
   const [data, setData] = useState({});
   const [user, setUser] = useState({id: '', confirmed: 0});
   const [submitDisabled, setSubmitDisabled] = useState(true);
-
+  const [formPath, setFormPath] = useState('');
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
 
@@ -65,7 +66,7 @@ export default function InscriptionForm(props) {
     const userId = props.match.params.userId;
     const url = baseUrl + userId;
     axios.get(url).then(response => {
-      if (response.data.user.confirmed > 3) {
+      if (response.data.user.confirmed > 4) {
         alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
         history.push('/registro');
       }
@@ -115,6 +116,8 @@ export default function InscriptionForm(props) {
           if (response.statusText === 'OK') {
             setUser({...user, confirmed: newConfirmed})
           }
+        }).then(() => {
+          setActiveStep(prevActiveStep => prevActiveStep + 1);
         });
         break;
       case '/address':
@@ -124,10 +127,14 @@ export default function InscriptionForm(props) {
               if (response.statusText === 'OK') {
                 setUser({...user, confirmed: 2})
               }
+            }).then(() => {
+              setActiveStep(prevActiveStep => prevActiveStep + 1);
             });
           });
         } else {
-          axios.put(apiUrl, step_data);
+          axios.put(apiUrl, step_data).then(() => {
+            setActiveStep(prevActiveStep => prevActiveStep + 1);
+          });
         }
         break;
       case '/mail':
@@ -137,10 +144,14 @@ export default function InscriptionForm(props) {
               if (response.statusText === 'OK') {
                 setUser({...user, confirmed: 3})
               }
+            }).then(() => {
+              setActiveStep(prevActiveStep => prevActiveStep + 1);
             });
           });
         } else {
-          axios.put(apiUrl, step_data);
+          axios.put(apiUrl, step_data).then(() => {
+            setActiveStep(prevActiveStep => prevActiveStep + 1);
+          });
         }
         break;
       case '/professional':
@@ -155,13 +166,20 @@ export default function InscriptionForm(props) {
         } else {
           axios.put(apiUrl, step_data);
         }
+        axios.post(baseUrl + props.match.params.userId + '/form').then(response => {
+          if (response.statusText === 'Created') {
+            setFormPath('http://localhost:4000/api/users/' + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
+          }
+        }).then(() => {
+          setActiveStep(prevActiveStep => prevActiveStep + 1);
+        });
         break;
       default:
 
     }
 
     //setSubmitDisabled(true);
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    //setActiveStep(prevActiveStep => prevActiveStep + 1);
   };
 
   const handleBack = () => {
@@ -204,10 +222,26 @@ export default function InscriptionForm(props) {
             {activeStep === steps.length ? (
               <Container>
                 <Typography className={classes.instructions}>
-                  Hemos recibido tu información exitosamente.
+                  Revisa que todos los datos se hayan ingresado correctamente.
                 </Typography>
+                <Typography className={classes.instructions}>
+                  Si necesitas corregir algo presiona el botón reiniciar.
+                </Typography>
+                <Typography className={classes.instructions}>
+                  Si todo está correcto, descarga el formato, imprímelo, fírmalo
+                  y escanéalo, la siguiente vez que entres a la plataforma podrás subirlo.
+                </Typography>
+                <Typography className={classes.instructions}>
+                  También deberás presentar este documento en original el día del examen.
+                </Typography>
+
+                <object width="100%" height="400" data={formPath} type="application/pdf">   </object>
+
                 <Button onClick={handleReset} className={classes.button}>
                   Reiniciar
+                </Button>
+                <Button href="http://app.comgecey.org/signin" className={classes.button}>
+                  Terminar
                 </Button>
               </Container>
             ) : (
@@ -227,7 +261,7 @@ export default function InscriptionForm(props) {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Terminar' : 'Siguiente'}
+                    {activeStep === steps.length - 1 ? 'Revisar' : 'Siguiente'}
                   </Button>
                   </Grid>
                 </Grid>
