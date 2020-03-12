@@ -105,7 +105,7 @@ export default function Apply() {
   function handleSubmit(e) {
     e.preventDefault();
     if (inputs.confirm===inputs.password) {
-      axios.post('http://localhost:4000/api/users', {email: inputs.email, password: inputs.password}).then((response) => {
+      axios.post('https://comgecey-backend.herokuapp.com/api/users', {email: inputs.email, password: inputs.password}).then((response) => {
         if (response.status === 201) {
           alert('Te hemos enviado un correo de confirmación.');
         } else {

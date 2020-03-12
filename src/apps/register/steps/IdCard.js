@@ -45,7 +45,7 @@ export default function IdCard(props) {
   }, []);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/users/' + props.userId).then(response => {
+    axios.get('https://comgecey-backend.herokuapp.com/api/users/' + props.userId).then(response => {
       const userData = Object.assign({}, response.data.user);
       delete userData['email'];
       delete userData['id'];

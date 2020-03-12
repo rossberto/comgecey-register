@@ -49,7 +49,7 @@ function getSteps() {
   return ['Ficha de identificación', 'Domicilio particular', 'Domicilio para correspondencia', 'Licenciatura'];
 }
 
-const baseUrl = 'http://localhost:4000/api/users/';
+const baseUrl = 'https://comgecey-backend.herokuapp.com/api/users/'; //'http://localhost:4000/api/users/';
 
 export default function InscriptionForm(props) {
   const classes = useStyles();
@@ -163,7 +163,7 @@ export default function InscriptionForm(props) {
             }).then(() => {
               axios.post(baseUrl + props.match.params.userId + '/form').then(response => {
                 if (response.statusText === 'Created') {
-                  setFormPath('http://localhost:4000/api/users/' + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
+                  setFormPath(baseUrl + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
                 }
               }).then(() => {
                 setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -174,7 +174,7 @@ export default function InscriptionForm(props) {
           axios.put(apiUrl, step_data).then(() => {
             axios.post(baseUrl + props.match.params.userId + '/form').then(response => {
               if (response.statusText === 'Created') {
-                setFormPath('http://localhost:4000/api/users/' + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
+                setFormPath(baseUrl + props.match.params.userId + '/documents/solicitud-' + props.match.params.userId + '.pdf');
               }
             }).then(() => {
               setActiveStep(prevActiveStep => prevActiveStep + 1);

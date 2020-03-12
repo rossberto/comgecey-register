@@ -44,7 +44,7 @@ export default function Suscribe() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post('http://localhost:4000/api/newsletter/suscribers', {email: email}).then((response) => {
+    axios.post('https://comgecey-backend.herokuapp.com/api/newsletter/suscribers', {email: email}).then((response) => {
       if (response.status === 201) {
         setEmail('');
         setOpen(true);
@@ -60,7 +60,7 @@ export default function Suscribe() {
   }
 
   return (
-    <Paper className={classes.paper+classes.calltoaction} style={{backgroundColor: '#7a6800ff', padding: '100px'}}>
+    <Paper className={classes.calltoaction} style={{backgroundColor: '#7a6800ff', padding: '100px'}}>
       <center>
         <Typography variant="h4">
           Suscríbete a nuestro boletín para estar enterado de las próximas convocatorias y eventos.

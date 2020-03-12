@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const baseUrl = 'http://localhost:4000/api/users/';
+const baseUrl = 'https://comgecey-backend.herokuapp.com/api/users/';
 
 const professionalInfo = {
   endpoint: '/professional',

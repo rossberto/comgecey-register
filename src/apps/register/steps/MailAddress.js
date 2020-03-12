@@ -34,7 +34,7 @@ const addressInfo = {
   phone: ''
 }
 
-const baseUrl = 'http://localhost:4000/api/users/';
+const baseUrl = 'https://comgecey-backend.herokuapp.com/api/users/';
 
 export default function MailAddress(props) {
   const classes = useStyles();

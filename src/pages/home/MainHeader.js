@@ -14,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     color: 'white'
   },
   image: {
-    maxWidth:"400px"
+    maxWidth:"400px",
+    background: '#111f22ff'
   }
 }));
 
@@ -23,7 +24,7 @@ export default function MainHeader() {
 
   return (
     <React.Fragment>
-      <Paper className={classes.paper+classes.header}>
+      <Paper className={classes.header}>
         <Container>
         <Button href="http://app.comgecey.org/signin" style={{ position: "absolute", color: "white", marginTop: "10px"}}>
           Ingresar
