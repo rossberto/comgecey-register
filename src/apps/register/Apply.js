@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import { Typography, Box, Grid, Paper, Link, TextField, Button} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import logo from './comgecey-02.png'
-import axios from 'axios';
+import { apiUrl } from '../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const theme = createMuiTheme({
   palette: {
@@ -105,7 +108,7 @@ export default function Apply() {
   function handleSubmit(e) {
     e.preventDefault();
     if (inputs.confirm===inputs.password) {
-      axios.post('https://comgecey-backend.herokuapp.com/api/users', {email: inputs.email, password: inputs.password}).then((response) => {
+      axios.post(baseUrl, {email: inputs.email, password: inputs.password}).then((response) => {
         if (response.status === 201) {
           alert('Te hemos enviado un correo de confirmación.');
         } else {

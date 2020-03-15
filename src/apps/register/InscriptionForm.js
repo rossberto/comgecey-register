@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import {Stepper, Step, StepLabel, Button, Typography, Grid, Container} from '@material-ui/core';
 import IdCard from './steps/IdCard';
 import ParticularAddress from './steps/ParticularAddress';
 import MailAddress from './steps/MailAddress';
 import Professional from './steps/Professional';
-import axios from 'axios';
 import history from '../../history';
+import { apiUrl } from '../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const theme = createMuiTheme({
   palette: {
@@ -48,8 +51,6 @@ const useStyles = makeStyles(theme => ({
 function getSteps() {
   return ['Ficha de identificación', 'Domicilio particular', 'Domicilio para correspondencia', 'Licenciatura'];
 }
-
-const baseUrl = 'https://comgecey-backend.herokuapp.com/api/users/'; //'http://localhost:4000/api/users/';
 
 export default function InscriptionForm(props) {
   const classes = useStyles();

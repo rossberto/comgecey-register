@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { InputLabel, Select, FormControl, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
+import { apiUrl } from '../../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -45,7 +48,7 @@ export default function IdCard(props) {
   }, []);
 
   useEffect(() => {
-    axios.get('https://comgecey-backend.herokuapp.com/api/users/' + props.userId).then(response => {
+    axios.get(baseUrl + props.userId).then(response => {
       const userData = Object.assign({}, response.data.user);
       delete userData['email'];
       delete userData['id'];

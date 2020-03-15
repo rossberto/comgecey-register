@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { FormControlLabel, Checkbox, Select, FormControl, InputLabel, Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
+import { apiUrl } from '../../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -33,8 +36,6 @@ const addressInfo = {
   zip_code: '',
   phone: ''
 }
-
-const baseUrl = 'https://comgecey-backend.herokuapp.com/api/users/';
 
 export default function MailAddress(props) {
   const classes = useStyles();

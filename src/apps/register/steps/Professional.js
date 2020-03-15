@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Container, Typography, Grid, TextField, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
+import { apiUrl } from '../../../apiUrl';
+
+const baseUrl = apiUrl + 'users/';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -22,8 +25,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
-const baseUrl = 'https://comgecey-backend.herokuapp.com/api/users/';
 
 const professionalInfo = {
   endpoint: '/professional',
