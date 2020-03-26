@@ -4,7 +4,7 @@ import { Typography, Box, Grid, Paper, Link, TextField, Button} from '@material-
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import logo from './comgecey-02.png'
+import logo from './comgecey-02lr2.png'
 import { apiUrl } from '../../apiUrl';
 
 const baseUrl = apiUrl + 'users/';

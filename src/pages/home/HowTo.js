@@ -50,7 +50,7 @@ export default function HowTo() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button href="https://registro.comgecey.org">
+                <Button href="/registro">
                   Ir a la Página de Registro
                 </Button>
               </CardActions>

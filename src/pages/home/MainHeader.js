@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Grid, Typography, Container, Button} from '@material-ui/core';
-import logo from './images/comgecey-02.png';
+import logo from './images/comgecey-02lr2.png';
 
 const useStyles = makeStyles(theme => ({
   paper: {

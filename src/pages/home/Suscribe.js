@@ -44,7 +44,7 @@ export default function Suscribe() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post('https://comgecey-backend.herokuapp.com/api/newsletter/suscribers', {email: email}).then((response) => {
+    axios.post('https://api.comgecey.org/api/newsletter/suscribers', {email: email}).then((response) => {
       if (response.status === 201) {
         setEmail('');
         setOpen(true);
