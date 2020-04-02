@@ -9,7 +9,7 @@ import Professional from './steps/Professional';
 import history from '../../history';
 import { apiUrl } from '../../apiUrl';
 
-const baseUrl = apiUrl + 'users/';
+const baseUrl = apiUrl + 'register/';
 
 const theme = createMuiTheme({
   palette: {
@@ -65,8 +65,9 @@ export default function InscriptionForm(props) {
   useEffect(() => {
     const userId = props.match.params.userId;
     const url = baseUrl + userId;
+    
     axios.get(url).then(response => {
-      if (response.data.user.confirmed > 3) {
+      if (response.data.user.confirmed > 4) {
         alert('Este enlace ya no es válido porque el usuario ya ha sido registrado previamente.');
         history.push('/registro');
       }
@@ -218,6 +219,14 @@ export default function InscriptionForm(props) {
     }
   }
 
+  function handleFinish() {
+    axios.put(baseUrl + user.id, {confirmed: 5}).then(response => {
+      if (response.statusText === 'OK') {
+        setUser({...user, confirmed: 5});
+      }
+    });
+  }
+
   return (
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
@@ -261,7 +270,7 @@ export default function InscriptionForm(props) {
                   <Button href={formPath} className={classes.button} download target="_blank">
                     Descargar
                   </Button>
-                  <Button href="http://app.comgecey.org/signin" className={classes.button}>
+                  <Button onClick={handleFinish} href="http://app.comgecey.org/signin" className={classes.button}>
                     Terminar
                   </Button>
                 </div>

@@ -7,7 +7,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import logo from './comgecey-02lr2.png'
 import { apiUrl } from '../../apiUrl';
 
-const baseUrl = apiUrl + 'users/';
+const baseUrl = apiUrl + 'register';
 
 const theme = createMuiTheme({
   palette: {
@@ -127,11 +127,8 @@ export default function Apply() {
     <Grid container component="main" className={classes.root}>
 
       <Grid container item xs={12} sm={6} md={7} className={classes.image} >
-      {/*<Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square className={classes.image}>*/}
       </Grid>
       <Grid item  xs={12} sm={6} md={5} component={Paper} elevation={6} square>
-        {/*<img src={logos} style={{position: 'contained', margin: '50px auto'}} />*/}
-        {/*<Instructions />*/}
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
             Inicia hoy mismo tu registro.

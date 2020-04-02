@@ -4,7 +4,7 @@ import { Container, Typography, Grid, TextField, CssBaseline } from '@material-u
 import { makeStyles } from '@material-ui/core/styles';
 import { apiUrl } from '../../../apiUrl';
 
-const baseUrl = apiUrl + 'users/';
+const baseUrl = apiUrl + 'register/';
 
 const useStyles = makeStyles(theme => ({
   paper: {

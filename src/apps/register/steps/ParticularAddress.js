@@ -4,7 +4,7 @@ import { Select, FormControl, InputLabel, Container, Typography, Grid, TextField
 import { makeStyles } from '@material-ui/core/styles';
 import { apiUrl } from '../../../apiUrl';
 
-const baseUrl = apiUrl + 'users/';
+const baseUrl = apiUrl + 'register/';
 
 const useStyles = makeStyles(theme => ({
   paper: {

@@ -4,7 +4,7 @@ import { FormControlLabel, Checkbox, Select, FormControl, InputLabel, Container,
 import { makeStyles } from '@material-ui/core/styles';
 import { apiUrl } from '../../../apiUrl';
 
-const baseUrl = apiUrl + 'users/';
+const baseUrl = apiUrl + 'register/';
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -90,6 +90,17 @@ export default function MailAddress(props) {
         </Typography>
         <form className={classes.form} noValidate onChange={handleChange}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    name="same-address"
+                    color="primary"
+                  />
+                }
+                label="Mismo domicilio que el particular."
+              />
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 value={inputs.street}
@@ -210,18 +221,7 @@ export default function MailAddress(props) {
             </Grid>
 
           </Grid>
-          <FormControlLabel
-            control={
-              <Checkbox
-                name="same-address"
-                //checked={state.checkedB}
-                //onChange={handleChange('checkedB')}
-                //value="checkedB"
-                color="primary"
-              />
-            }
-            label="Mismo domicilio que el particular."
-          />
+
         </form>
       </div>
     </Container>
