@@ -110,7 +110,7 @@ export default function Apply() {
     if (inputs.confirm===inputs.password) {
       axios.post(baseUrl, {email: inputs.email, password: inputs.password}).then((response) => {
         if (response.status === 201) {
-          alert('Te hemos enviado un correo de confirmación.');
+          alert('Te hemos enviado un correo de confirmación.\n\nSi no ves el correo en la bandeja principal, por favor revisa en tu carpeta de spam o correo no deseado.');
         } else {
           alert('El correo electrónico ingresado ya ha sido registrado anteriormente.');
         }
