@@ -36,7 +36,7 @@ export default function MainHeader() {
           <Grid item xs={12} sm={6}>
             <Typography variant="h2" component="h2"><center>Convocatoria Abierta</center></Typography>
             <Typography variant="h3"><center>Próximo Examen de Certificación</center></Typography>
-            <Typography variant="h3"><center>28 de Junio del 2020</center></Typography>
+            <Typography variant="h3"><center>28 de Febrero del 2021</center></Typography>
           </Grid>
         </Grid>
         </Container>

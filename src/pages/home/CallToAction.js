@@ -26,7 +26,7 @@ export default function CallToAction() {
   return (
     <Paper className={classes.calltoaction}>
       <center><Typography variant="h4">Ahora es más fácil inscribirse desde nuestra plataforma online.</Typography>
-      <Typography variant="h4">Fecha límite de inscripción: 29 de Mayo.</Typography>
+      <Typography variant="h4">Fecha límite de inscripción: 29 de Enero.</Typography>
       <Button href="/registro" variant="outlined" className={classes.button}>
         Ir a la Página de Registro
       </Button></center>
