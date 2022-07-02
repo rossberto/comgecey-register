@@ -63,7 +63,7 @@ export default function HowTo() {
                   2. Realiza el pago de inscripción.
                 </Typography>
                 <br />
-                <Typography variant="body1">$2,500 en la cuenta BBVA 0114591933.</Typography>
+                <Typography variant="body1">$3,000 en la cuenta BBVA 0114591933.</Typography>
                 <br />
                 <br />
                 <Typography variant="body1">El comprobante de pago se te solicitará en el último paso.</Typography>

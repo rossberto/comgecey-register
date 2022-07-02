@@ -57,6 +57,9 @@ export default function DocumentsDialog(props) {
           {bull} Cédula Profesional
         </Typography>
         <Typography component="h1" variant="h5">
+          {bull} Comprobante de Ejercicio Profesional
+        </Typography>
+        <Typography component="h1" variant="h5">
           {bull} Comprobante de Pago
         </Typography>
         <br />
